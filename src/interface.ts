@@ -4,10 +4,16 @@ export enum ReservationSite {
   OpenTable = 'opentable'
 }
 
+export type TimeRange = {
+  start: string,
+  end: string,
+};
+
 type ResyConfig = {
   venueId: string,
   numSeats: number,
   date: string,
+  timeRange?: TimeRange
 }
 
 interface Reservation {

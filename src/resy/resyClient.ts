@@ -1,6 +1,14 @@
 import axios from "axios";
+import { TimeRange } from "../interface";
 
 const baseUrl = 'https://api.resy.com'
+
+
+const getEstDatetime = (date: string | number | Date): string => {
+  return new Date(date).toLocaleString('en-US', {
+    timeZone: 'America/New_York'
+  });
+}
 
 export class ResyClient {
   public apiKey: string;
@@ -42,7 +50,7 @@ export class ResyClient {
     }
   }
 
-  async findAvailabilities(venueId: string, numSeats: number, day: string): Promise<string[]> {
+  async findAvailabilities(venueId: string, numSeats: number, day: string, timeRange: TimeRange | undefined): Promise<string[]> {
     const findUrl = `${baseUrl}/4/find`;
 
     const queryParams = new URLSearchParams({
@@ -69,7 +77,18 @@ export class ResyClient {
       if (slots.length === 0) {
         throw new Error(`There are no slots matching your criteria`);
       }
-      return slots.map((slot: { config: { token: string } }) => slot.config.token)
+
+      let matchingSlots = slots;
+      if (timeRange !== undefined) {
+        matchingSlots = slots.filter((slot: any) => {
+          const slotStartTime = getEstDatetime(slot.date.start);
+          const desireTimeRangeStart = getEstDatetime(`${day} ${timeRange.start}`);
+          const desireTimeRangeEnd = getEstDatetime(`${day} ${timeRange.end}`);
+          return slotStartTime > desireTimeRangeStart && slotStartTime < desireTimeRangeEnd;
+        })
+      }
+
+      return matchingSlots.map((slot: { config: { token: string } }) => slot.config.token)
     } catch (err: any) {
       throw new Error(`FindReservation ${err.response?.message || err.message}`);
     }

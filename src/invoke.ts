@@ -1,11 +1,16 @@
 import { ReservationSite, ResyReservation } from './interface';
+import { Venue } from './resy/constants';
 import { handler } from './resy/handler';
 
 const event: ResyReservation = {
   config: {
-    venueId: "59536",
+    venueId: Venue.WenWen,
     numSeats: 2,
-    date: "2023-05-14"
+    date: "2023-05-10",
+    timeRange: {
+      start: "18:10",
+      end: "18:19"
+    }
   },
   site: ReservationSite.Resy,
 }
