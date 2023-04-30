@@ -17,6 +17,23 @@
    - RESY_EMAIL - used to generate an `Auth Token` from login credentials
    - RESY_PASSWORD - used to generate an `Auth Token` from login credentials
 2. Run deployment steps
+3. To invoke the lambda, an example event can be found in `src/invoke.ts`
+4. To add a schedule `npm run scheduleResy -- --help`, all times in in EST
+  ```
+  CLI to schedule resy reservation
+
+  Options:
+    --accountId <accountId>                AWS Account ID
+    --region <region>                      AWS Region
+    --venueId <venueId>                    Venue ID
+    --numSeats <numSeats>                  Number of seats
+    --reservationDate <reservationDate>    Date of the reservation in yyyy-mm-dd format
+    --scheduleDateTime <scheduleDateTime>  Datetime of the schedule in yyyy-mm-ddThh:mm:ss format
+    --earliest <earliest>                  Earliest start time in hh:mm 24h format
+    --latest <latest>                      latest start time in hh:mm 24h format
+    -h, --help                             display help for command
+  ```
+4. Example `npm run scheduleResy -- --accountId ACCOUNT_ID --region AWS_REGION --venueId VENUE_ID --numSeats SEATS --reservationDate yyyy-mm-dd --scheduleDateTime yyyy-mm-ddThh:mm:ss`
 
 ## Useful commands
 
