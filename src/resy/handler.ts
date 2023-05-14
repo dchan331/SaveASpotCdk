@@ -13,7 +13,6 @@ export const handler = async (event: ResyReservation): Promise<ReservationRespon
     const configIds = await resyClient.findAvailabilities(venueId, numSeats, date, timeRange);
     let madeReservation = false;
     let index = 0;
-    console.log(configIds)
     if (configIds.length === 0) {
       throw new Error('There are no availabilities that fit your criteria');
     } 

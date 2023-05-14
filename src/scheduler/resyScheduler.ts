@@ -39,8 +39,6 @@ resyScheduler.name('resyScheduler')
         }
       }
 
-      console.log(resyEvent)
-
       const scheduleConfig: ScheduleConfig | undefined = scheduleConfigByVenue[venueId as Venue];
       if (!scheduleConfig) {
         throw new Error(`There is no config for venue ${venueId}. You can add config in src/resy/constants.ts`)
