@@ -3,7 +3,6 @@ import { TimeRange } from "../interface";
 
 const baseUrl = 'https://api.resy.com'
 
-
 const getEstDatetime = (date: string | number | Date): string => {
   return new Date(date).toLocaleString('en-US', {
     timeZone: 'America/New_York'
@@ -111,7 +110,6 @@ export class ResyClient {
           'x-resy-auth-token': this.authToken,
         }
       })
-
       return response.data.book_token.value;
     } catch (err: any) {
       throw new Error(`GetDetails ${err.response?.message || err.message}`);
@@ -137,7 +135,7 @@ export class ResyClient {
 
       return response.data;
     } catch (err: any) {
-      throw new Error(`MakeReservation ${err.response?.message || err.message}`);
+      throw new Error(`MakeReservation ${err.response?.data || err.response?.message || err.message}`);
     }
   }
 }

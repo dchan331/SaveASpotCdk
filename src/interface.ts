@@ -1,7 +1,5 @@
 export enum ReservationSite {
   Resy = 'resy',
-  Tock = 'tock',
-  OpenTable = 'opentable'
 }
 
 export type TimeRange = {
@@ -30,3 +28,5 @@ export type ReservationTypes = ResyReservation;
 export interface ReservationResponse {
   message: string;
 }
+
+export type ScheduleConfig = { daysInAdvance: number, time: string }
