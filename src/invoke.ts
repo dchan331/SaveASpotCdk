@@ -6,10 +6,10 @@ const event: ResyReservation = {
   config: {
     venueId: Venue.WenWen,
     numSeats: 2,
-    date: "2023-05-10",
+    date: "2023-06-02",
     timeRange: {
-      start: "18:10",
-      end: "18:19"
+      start: "18:00",
+      end: "18:30"
     }
   },
   site: ReservationSite.Resy,

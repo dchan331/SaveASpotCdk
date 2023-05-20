@@ -6,7 +6,7 @@ interface ReservationResponse {
   message: string;
 }
 
-export const handler = async (event: ReservationTypes, context: Context): Promise<ReservationResponse> => {
+export const handler = async (event: ReservationTypes, _: Context): Promise<ReservationResponse> => {
   if (event.site === ReservationSite.Resy) {
     return resyHandler(event);
   } else {

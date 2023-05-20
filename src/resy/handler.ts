@@ -11,21 +11,34 @@ export const handler = async (event: ResyReservation): Promise<ReservationRespon
     const resyClient = new ResyClient(apiKey, email, password);
     await resyClient.setAuthInfo();
     const configIds = await resyClient.findAvailabilities(venueId, numSeats, date, timeRange);
-    let madeReservation = false;
-    let index = 0;
+
     if (configIds.length === 0) {
       throw new Error('There are no availabilities that fit your criteria');
-    } 
+    }
+    let madeReservation = false;
+    let index = 0;
+    let reservedConfig = undefined
     while (!madeReservation && index < configIds.length) {
       const configId = configIds[index];
-      const bookToken = await resyClient.getDetails(numSeats, date, configId);
-      await resyClient.makeReservation(bookToken);
-      madeReservation = true;
+      try {
+        const bookToken = await resyClient.getDetails(numSeats, date, configId);
+        await resyClient.makeReservation(bookToken);
+        reservedConfig = configId
+        madeReservation = true;
+      } catch (e: any) {
+        index += 1
+      }
     }
-
-    return {
-      message: "success"
+    if (reservedConfig) {
+      const message = `Successfully made reservation for config ${reservedConfig}`
+      console.log(message)
+      return {
+        message
+      }
     }
+    const message = `Failed to reserve anything for ${JSON.stringify(event, null, 2)}`
+    console.log(message)
+    throw new Error(message)
   } catch (err: any) {
     throw new Error(err.message);
   }

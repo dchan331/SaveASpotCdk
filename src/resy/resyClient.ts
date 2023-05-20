@@ -5,7 +5,8 @@ const baseUrl = 'https://api.resy.com'
 
 const getEstDatetime = (date: string | number | Date): string => {
   return new Date(date).toLocaleString('en-US', {
-    timeZone: 'America/New_York'
+    timeZone: 'America/New_York',
+    hour: "2-digit", minute: "2-digit"
   });
 }
 
